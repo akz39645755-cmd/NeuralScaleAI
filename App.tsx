@@ -14,9 +14,23 @@ function App() {
   const [downloadModalItem, setDownloadModalItem] = useState<MediaItem | null>(null);
   const [selectedFormat, setSelectedFormat] = useState<OutputFormat>(OutputFormat.JPG);
   const [isConverting, setIsConverting] = useState(false);
-  
+   
   // Configuration State
   const [upscaleFactor, setUpscaleFactor] = useState<number>(4);
+
+  // --- 🟢 ADSTERRA SCRIPT INJECTION (ADDED HERE) ---
+  useEffect(() => {
+    // Check if script already exists to prevent duplicates
+    if (!document.getElementById('adsterra-banner-script')) {
+      const script = document.createElement('script');
+      script.id = 'adsterra-banner-script';
+      script.src = "//pl28180610.effectivegatecpm.com/06f0176bc2c5fc4587c7f06c85926ab7/invoke.js";
+      script.async = true;
+      script.setAttribute('data-cfasync', 'false');
+      document.body.appendChild(script);
+    }
+  }, []);
+  // --------------------------------------------------
 
   // --- File Handling ---
 
@@ -36,7 +50,7 @@ function App() {
 
       const id = Math.random().toString(36).substring(7);
       const url = URL.createObjectURL(file);
-      
+       
       let dimensions = 'Unknown';
       if (!isVideo) {
          try {
@@ -231,7 +245,7 @@ function App() {
                 onChange={handleFileSelect}
                 accept={[...ALLOWED_IMAGE_TYPES, ...ALLOWED_VIDEO_TYPES].join(',')}
             />
-            
+             
             <div className="flex flex-col items-center justify-center gap-4 pointer-events-none">
                 <div className="w-20 h-20 bg-dark-800 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-gray-700 group-hover:border-brand-500/50">
                     <UploadCloud className={`w-10 h-10 ${dragActive ? 'text-brand-400' : 'text-gray-400'}`} />
@@ -249,14 +263,11 @@ function App() {
       </div>
 
       {/* ========================================================================= */}
-      {/* 🟢 AD SLOT 3: MAIN DISPLAY BANNER                                       */}
-      {/* Ideal for 728x90 Leaderboard or Adaptive Banner                         */}
+      {/* 🟢 AD SLOT 3: ADSTERRA NATIVE BANNER (UPDATED)                            */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-5xl my-6">
-        <div className="w-full min-h-[100px] bg-dark-800/30 border border-gray-800 border-dashed rounded-xl flex items-center justify-center overflow-hidden">
-            {/* PASTE YOUR AD COMPONENT OR SCRIPT HERE */}
-            <span className="text-gray-700 text-xs font-mono select-none">ADVERTISEMENT SPACE</span>
-        </div>
+      <div className="w-full max-w-5xl my-6 flex justify-center">
+         {/* This ID matches the script in the useEffect above */}
+         <div id="container-06f0176bc2c5fc4587c7f06c85926ab7"></div>
       </div>
       {/* ========================================================================= */}
 
